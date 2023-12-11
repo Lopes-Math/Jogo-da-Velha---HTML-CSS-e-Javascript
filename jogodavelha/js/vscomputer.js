@@ -67,54 +67,50 @@ const startGame = (isGameStarted) => {
         return;
     }
     cells.forEach(cell => cell.addEventListener("click", cellClick));
-    // Adicionar o movimento do computador aqui
-    currentPlayer = playerX;
-    if (currentPlayer === playerO) {
-        computerMove();
-    }
 }
 
 function cellClick(idHtml) {
     const id = idHtml;
-
+    
+    
     if (!jogadorXRegistrado || spaces[id] !== null) {
         return;
     }
-
+    
     spaces[id] = currentPlayer;
     document.getElementById(id).innerText = currentPlayer;
-
+    
     if (checkWinner() !== false) {
         let winningCells = checkWinner();
-
+        
         winningCells.forEach(index => {
             document.getElementById(index).style.backgroundColor = 'rgba(255, 180, 208, 0.926)';
         });
-
+        
         if (currentPlayer === playerX) {
             player1Wins++;
             document.getElementById('player1-wins').innerText = player1Wins;
-
+            
             var jogador1Text = document.querySelector("#jogador1Text p");
-
+            
             var nameWinner = document.querySelector("#titleText p");
             nameWinner.innerHTML = `${jogador1Text.innerHTML} venceu!`;
         } else if (currentPlayer === playerO) {
             player2Wins++;
             document.getElementById('player2-wins').innerText = player2Wins;
-
+            
             var jogador2Text = document.querySelector("#jogador2Text p");
-
+            
             var nameWinner = document.querySelector("#titleText p");
             nameWinner.innerHTML = `A velha venceu!`;
         }
-
+        
         cells.forEach(cell => cell.removeEventListener('click', cellClick));
-
+        
         setTimeout(() => {
             restartRodada();
         }, 3000);
-
+        
         return;
     } else if (!spaces.includes(null)) {
         setTimeout(() => {
@@ -124,11 +120,12 @@ function cellClick(idHtml) {
         nameWinner.innerHTML = `Empate!`;
         return;
     }
-
+    
     currentPlayer = currentPlayer === playerX ? playerO : playerX;
-
+    
     if (currentPlayer === playerO) {
         computerMove();
+        currentPlayer = playerX;
     }
 }
 
@@ -145,7 +142,6 @@ function computerMove() {
 
     spaces[computerChoice] = playerO;
     document.getElementById(computerChoice).innerText = playerO;
-    currentPlayer = playerX
 }
 
 const winningPlays = [
