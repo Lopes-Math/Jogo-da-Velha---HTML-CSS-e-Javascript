@@ -66,53 +66,60 @@ const startGame = (isGameStarted) => {
     if (!isGameStarted) {
         return;
     }
-    cells.forEach(cell => cell.addEventListener("click", cellClick));
 }
 
 function cellClick(idHtml) {
     const id = idHtml;
     
-    
     if (!jogadorXRegistrado || spaces[id] !== null) {
         return;
     }
+
+    console.log(playerX);
+    console.log(playerO);
     
     spaces[id] = currentPlayer;
     document.getElementById(id).innerText = currentPlayer;
     
-    if (checkWinner() !== false) {
-        let winningCells = checkWinner();
-        
-        winningCells.forEach(index => {
-            document.getElementById(index).style.backgroundColor = 'rgba(255, 180, 208, 0.926)';
-        });
-        
-        if (currentPlayer === playerX) {
-            player1Wins++;
-            document.getElementById('player1-wins').innerText = player1Wins;
+    if (checkWinner() !== false){
+        if ((checkWinner() !== false)&&(currentPlayer = playerX)) {
+            let winningCells = checkWinner();
             
-            var jogador1Text = document.querySelector("#jogador1Text p");
+            winningCells.forEach(index => {
+                document.getElementById(index).style.backgroundColor = 'rgba(255, 180, 208, 0.926)';
+            });
             
-            var nameWinner = document.querySelector("#titleText p");
-            nameWinner.innerHTML = `${jogador1Text.innerHTML} venceu!`;
-        } else if (currentPlayer === playerO) {
-            player2Wins++;
-            document.getElementById('player2-wins').innerText = player2Wins;
+                player1Wins++;
+                document.getElementById('player1-wins').innerText = player1Wins;
+                
+                var jogador1Text = document.querySelector("#jogador1Text p");
+                
+                var nameWinner = document.querySelector("#titleText p");
+                nameWinner.innerHTML = `${jogador1Text.innerHTML} venceu!`;
             
-            var jogador2Text = document.querySelector("#jogador2Text p");
+    
+        } else if ((checkWinner() !== false)&&(currentPlayer = playerO)) {        
+            let winningCells = checkWinner();
             
-            var nameWinner = document.querySelector("#titleText p");
-            nameWinner.innerHTML = `A velha venceu!`;
-        }
+            winningCells.forEach(index => {
+                document.getElementById(index).style.backgroundColor = 'rgba(255, 180, 208, 0.926)';
+            });
+            
+                player2Wins++;
+                document.getElementById('player2-wins').innerText = player2Wins;
+                
+                var nameWinner = document.querySelector("#titleText p");
+                nameWinner.innerHTML = `A velha venceu!`;
+            }
+    
+            setTimeout(() => {
+                restartRodada();
+            }, 3000);
+            
+            return;
         
-        cells.forEach(cell => cell.removeEventListener('click', cellClick));
+        } else if (!spaces.includes(null)) {
         
-        setTimeout(() => {
-            restartRodada();
-        }, 3000);
-        
-        return;
-    } else if (!spaces.includes(null)) {
         setTimeout(() => {
             restartRodada();
         }, 3000);
@@ -122,11 +129,30 @@ function cellClick(idHtml) {
     }
     
     currentPlayer = currentPlayer === playerX ? playerO : playerX;
-    
+   
     if (currentPlayer === playerO) {
         computerMove();
         currentPlayer = playerX;
-    }
+
+        if ((checkWinner() !== false)&&(currentPlayer = playerO)) {        
+            let winningCells = checkWinner();
+            
+            winningCells.forEach(index => {
+                document.getElementById(index).style.backgroundColor = 'rgba(255, 180, 208, 0.926)';
+            });
+            
+                player2Wins++;
+                document.getElementById('player2-wins').innerText = player2Wins;
+                
+                var nameWinner = document.querySelector("#titleText p");
+                nameWinner.innerHTML = `A velha venceu!`;
+                
+                setTimeout(() => {
+                    restartRodada();
+                }, 3000);
+            } 
+    } 
+    
 }
 
 function computerMove() {
@@ -186,5 +212,7 @@ function restartRodada() {
     var nameWinner = document.querySelector("#titleText p");
     nameWinner.innerHTML = "Jogo da";
 }
+console.log(playerX);
+console.log(playerO);
 
 startGame();
