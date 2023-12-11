@@ -141,18 +141,17 @@ function cellClick(idHtml) {
                 document.getElementById(index).style.backgroundColor = 'rgba(255, 180, 208, 0.926)';
             });
             
-                player2Wins++;
-                document.getElementById('player2-wins').innerText = player2Wins;
-                
-                var nameWinner = document.querySelector("#titleText p");
-                nameWinner.innerHTML = `A velha venceu!`;
-                
-                setTimeout(() => {
-                    restartRodada();
-                }, 3000);
-            } 
+            player2Wins++;
+            document.getElementById('player2-wins').innerText = player2Wins;
+            
+            var nameWinner = document.querySelector("#titleText p");
+            nameWinner.innerHTML = `A velha venceu!`;
+            
+            setTimeout(() => {
+                restartRodada();
+            }, 3000);
+        } 
     } 
-    
 }
 
 function computerMove() {
