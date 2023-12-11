@@ -211,7 +211,5 @@ function restartRodada() {
     var nameWinner = document.querySelector("#titleText p");
     nameWinner.innerHTML = "Jogo da";
 }
-console.log(playerX);
-console.log(playerO);
 
 startGame();
